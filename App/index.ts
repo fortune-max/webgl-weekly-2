@@ -132,7 +132,12 @@ export default class App {
   }
 
   _initGui() {
-    gui.add(this, '_useCarCamera');
+    gui.add(this, '_useCarCamera').onChange((value: boolean) => {
+      if (!value) {
+        this._camera.position.set(5, 3, 0);
+        this._controls.update();
+      }
+    });
   }
 
   _initEvents() {
@@ -168,7 +173,7 @@ export default class App {
       if (this._useCarCamera) {
         this._camera.rotation.set(this._meshCar.rotation.x, this._meshCar.rotation.z, 0);
         this._camera.position.set(this._meshCar.position.x, this._meshCar.position.y + 2, this._meshCar.position.z + 4);
-      } else this._controls.update();
+      }
     }
     
     window.requestAnimationFrame(this._animate.bind(this));
